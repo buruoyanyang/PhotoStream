@@ -1,0 +1,56 @@
+server:
+  port: 9020
+spring:
+  application:
+    name: photo-stream
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/photo_stream
+    username: root
+    password: Mingdu123.
+    druid:
+      initial-size: 3
+      max-active: 50
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: "SELECT 1"
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      max-open-prepared-statements: 10
+      remove-abandoned: false
+      remove-abandoned-timeout: 300
+      log-abandoned: true
+      connection-properties: druid.keepAlive=true
+      filters: stat,log4j2
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,*.woff2,*.map,*.woff,*.ttf"
+        sessionStatMaxCount: 1000
+        profileEnable: false
+        principalSessionName: users.username
+        sessionStatEnable: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: "/druid/*"
+        reset-enable: false
+        login-username: admin
+        login-password: admin
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        format_sql: true
+        use_sql_comments: true
+
