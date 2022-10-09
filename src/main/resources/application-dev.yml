@@ -53,4 +53,11 @@ spring:
         current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
         format_sql: true
         use_sql_comments: true
+minio:
+  endpoint: http://www.buruoyanyang.cn:9010
+  bucket: photo-stream
+  filename-pre: file-cloud-server-%s
+  access-key: minio_user
+  secret-key: minio_user
+
 

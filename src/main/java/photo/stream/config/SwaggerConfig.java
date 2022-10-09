@@ -21,18 +21,25 @@ public class SwaggerConfig {
     public GroupedOpenApi userApi(){
         String[] paths = { "/**" };
         String[] packagedToMatch = { "photo.stream.controller" };
-        return GroupedOpenApi.builder().group("用户模块")
+        return GroupedOpenApi.builder()
+                .group("照片墙")
                 .pathsToMatch(paths)
-                .addOperationCustomizer((operation, handlerMethod) -> operation.addParametersItem(new HeaderParameter().name("groupCode").example("测试").description("集团code").schema(new StringSchema()._default("BR").name("groupCode").description("集团code"))))
+                .addOperationCustomizer((operation, handlerMethod) -> operation.addParametersItem(new HeaderParameter()
+                        .name("groupCode")
+                        .example("测试")
+                        .description("集团code")
+                        .schema(new StringSchema()
+                                ._default("BR")
+                                .name("groupCode").description("集团code"))))
                 .packagesToScan(packagedToMatch).build();
     }
     @Bean
     public OpenAPI customOpenApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("XXX用户系统API")
+                        .title("照片墙API")
                         .version("1.0")
-                        .description( "Knife4j集成springdoc-openapi示例")
+                        .description( "照片墙API")
                         .license(new License().name("Apache 2.0")));
     }
 
