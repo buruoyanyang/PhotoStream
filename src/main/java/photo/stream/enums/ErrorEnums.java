@@ -23,7 +23,12 @@ public enum ErrorEnums {
     /**
      * MultipartFile 读取失败
      */
-    FILE_STREAM_ERROR(-10002, "文件流异常");
+    FILE_STREAM_ERROR(-10002, "文件流异常"),
+
+    /**
+     * 数据库create失败
+     */
+    REPOSITORY_CREATE_FAILED(-20001, "创建失败");
 
 
     @Getter

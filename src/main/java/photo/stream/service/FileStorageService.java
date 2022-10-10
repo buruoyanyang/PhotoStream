@@ -45,20 +45,37 @@ public class FileStorageService {
         return minioClient;
     }
 
+    private boolean fileExist(MultipartFile file) {
+        String fileMd5 = MD5Util.getInstance().get(file);
+        return fileExist(fileMd5);
+    }
+
+    public String getFilename(MultipartFile file) {
+        return getFilename(MD5Util.getInstance().get(file));
+    }
+
     private String getFilename(String md5) {
         return String.format(minioConfig.getFilenamePre(), md5);
     }
 
-
-    public boolean fileExist(MultipartFile file) {
-        return false;
+    public boolean fileExist(String fileMd5) {
+        String filename = this.getFilename(fileMd5);
+        try {
+            this.getClient().statObject(StatObjectArgs.builder().bucket(minioConfig.getBucket()).object(filename).build());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String upload(MultipartFile file) {
         try (InputStream is = file.getInputStream()){
-            String filename = this.getFilename(MD5Util.getInstance().get(file));
+            String fileMd5 = MD5Util.getInstance().get(file);
+            String filename = this.getFilename(fileMd5);
             // 判定文件是否存在
-
+            if (fileExist(fileMd5)) {
+                return filename;
+            }
             this.getClient()
                     .putObject(PutObjectArgs.builder()
                             .object(filename)
@@ -75,9 +92,5 @@ public class FileStorageService {
             throw new MinioServerException();
         }
     }
-
-
-
-
 
 }

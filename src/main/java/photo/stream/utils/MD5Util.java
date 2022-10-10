@@ -21,7 +21,7 @@ public enum MD5Util {
 
     public String get(MultipartFile file) {
         try {
-            return new String(DigestUtils.md5Digest(file.getInputStream()));
+            return DigestUtils.md5DigestAsHex(file.getInputStream());
         } catch (Exception ex) {
             return "";
         }
